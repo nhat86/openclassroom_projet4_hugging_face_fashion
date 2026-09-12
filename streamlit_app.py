@@ -5,6 +5,7 @@ Segmentation sémantique de vêtements via l'API Hugging Face (SegFormer B3 Clot
 Lancement : streamlit run streamlit_app.py
 """
 
+import os
 import time
 
 import numpy as np
@@ -18,6 +19,13 @@ from seg_utils import (
     classes_present, colorize_mask, compute_iou_per_class, get_api_token,
     get_ground_truth_mask, get_predicted_mask, list_image_ids,
 )
+
+# Sur Streamlit Cloud, les secrets sont exposés via st.secrets
+try:
+    if "API_KEY" in st.secrets:
+        os.environ.setdefault("API_KEY", st.secrets["API_KEY"])
+except Exception:
+    pass
 
 # ---------------------------------------------------------------------------
 # Interface
